@@ -1,3 +1,10 @@
+export type DataSource = 'live' | 'mock'
+
+export interface QueryResult<T> {
+  data: T
+  source: DataSource
+}
+
 export interface Beach {
   id: number
   slug: string

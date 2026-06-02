@@ -1,10 +1,10 @@
 import type { WaveTrendPoint } from '../../lib/types'
-import { formatValue } from '../../lib/units'
+import { degToCompass, formatValue } from '../../lib/units'
 
 interface WaveTrendChartProps {
   points: WaveTrendPoint[]
   pressureHpa?: number | null
-  visibilityNm?: number | null
+  swellDirectionDeg?: number | null
 }
 
 function trendLabel(points: WaveTrendPoint[]): string {
@@ -17,7 +17,7 @@ function trendLabel(points: WaveTrendPoint[]): string {
   return 'Holding Steady'
 }
 
-export function WaveTrendChart({ points, pressureHpa, visibilityNm }: WaveTrendChartProps) {
+export function WaveTrendChart({ points, pressureHpa, swellDirectionDeg }: WaveTrendChartProps) {
   const heights = points.map((p) => p.wave_height_ft ?? 0)
   const max = Math.max(...heights, 1)
 
@@ -45,10 +45,10 @@ export function WaveTrendChart({ points, pressureHpa, visibilityNm }: WaveTrendC
         </div>
       </div>
       <div className="bg-surface-container rounded-2xl p-md flex flex-col justify-between min-h-[100px]">
-        <span className="material-symbols-outlined text-primary">visibility</span>
+        <span className="material-symbols-outlined text-primary">explore</span>
         <div>
-          <p className="text-xs font-medium tracking-wide text-on-surface-variant uppercase">Visibility</p>
-          <p className="text-base font-semibold">{formatValue(visibilityNm, ' nm', 1)}</p>
+          <p className="text-xs font-medium tracking-wide text-on-surface-variant uppercase">Swell Direction</p>
+          <p className="text-base font-semibold">{degToCompass(swellDirectionDeg)}</p>
         </div>
       </div>
       <div className="bg-surface-container rounded-2xl p-md flex flex-col justify-between min-h-[100px]">

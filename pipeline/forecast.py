@@ -48,8 +48,8 @@ def generate_forecast(
     """Simple trend extrapolation from last few nearshore wave readings."""
     trend_delta = 0.0
     if len(history_nearshore) >= 2:
-        recent = history_nearshore[0].wave_height_m or 0
-        older = history_nearshore[min(len(history_nearshore) - 1, 3)].wave_height_m or 0
+        recent = float(history_nearshore[0].wave_height_m or 0)
+        older = float(history_nearshore[min(len(history_nearshore) - 1, 3)].wave_height_m or 0)
         if recent and older:
             trend_delta = (recent - older) / max(len(history_nearshore) - 1, 1)
 

@@ -5,6 +5,19 @@ interface LivePingsListProps {
   pings: StationPing[]
 }
 
+function waveDisplay(ping: StationPing): string {
+  const period = ping.wave_period_sec ?? ping.swell_period_sec
+  if (ping.wave_height_ft != null) {
+    return `${formatValue(ping.wave_height_ft, ' ft @ ')}${formatValue(period, 's', 0)}`
+  }
+  if (ping.swell_height_ft != null) {
+    const swellPeriod = ping.swell_period_sec ?? ping.wave_period_sec
+    const periodSuffix = swellPeriod != null ? ` @ ${formatValue(swellPeriod, 's', 0)}` : ''
+    return `${formatValue(ping.swell_height_ft, ' ft swell', 1)}${periodSuffix}`
+  }
+  return '—'
+}
+
 function stationSubtitle(ping: StationPing): string {
   if (ping.station_type === 'nearshore_buoy') return 'Cape Canaveral Nearshore'
   if (ping.station_type === 'offshore_buoy') return '20nm E of Canaveral'
@@ -42,13 +55,7 @@ export function LivePingsList({ pings }: LivePingsListProps) {
             <div className="grid grid-cols-2 gap-md py-sm border-t border-outline-variant/20">
               <div className="flex flex-col">
                 <span className="text-xs font-medium tracking-wide text-on-surface-variant uppercase">Wave</span>
-                <span className="text-base text-on-surface">
-                  {ping.wave_height_ft != null
-                    ? `${formatValue(ping.wave_height_ft, ' ft @ ')}${formatValue(ping.wave_period_sec, 's', 0)}`
-                    : ping.swell_height_ft != null
-                      ? `${formatValue(ping.swell_height_ft, ' ft swell', 1)}`
-                      : '—'}
-                </span>
+                <span className="text-base text-on-surface">{waveDisplay(ping)}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-medium tracking-wide text-on-surface-variant uppercase">

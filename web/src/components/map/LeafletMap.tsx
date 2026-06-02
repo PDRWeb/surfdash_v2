@@ -46,10 +46,11 @@ function MapInvalidateSize() {
 interface LeafletMapProps {
   status: BeachStatus
   stations: StationMarker[]
+  isDemo?: boolean
   className?: string
 }
 
-export function LeafletMap({ status, stations, className = '' }: LeafletMapProps) {
+export function LeafletMap({ status, stations, isDemo = false, className = '' }: LeafletMapProps) {
   const center: [number, number] = [status.lat, status.lng]
 
   return (
@@ -85,6 +86,7 @@ export function LeafletMap({ status, stations, className = '' }: LeafletMapProps
           <div className="glass-card px-md py-sm rounded-xl pointer-events-auto">
             <p className="text-xs font-medium tracking-wide text-on-primary-container uppercase">Current Status</p>
             <p className="text-base font-semibold text-secondary-container">
+              {isDemo && <span className="text-xs font-bold text-on-surface-variant mr-1">DEMO ·</span>}
               {status.status_label ?? status.rating ?? 'ACTIVE'}
             </p>
           </div>
