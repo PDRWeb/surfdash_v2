@@ -27,6 +27,15 @@ export function formatRelative(iso: string | null | undefined): string {
   return `${hrs}H AGO`
 }
 
+export function formatForecastHour(iso: string | null | undefined): string {
+  if (!iso) return '—'
+  return new Date(iso).toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    hour12: true,
+    timeZone: 'America/New_York',
+  })
+}
+
 export function formatValue(value: number | null | undefined, suffix = '', digits = 1): string {
   if (value == null) return '—'
   return `${value.toFixed(digits)}${suffix}`

@@ -7,8 +7,10 @@ import { Sidebar } from '../components/layout/Sidebar'
 import { LivePingsList } from '../components/feed/LivePingsList'
 import { WaveTrendChart } from '../components/charts/WaveTrendChart'
 import { LeafletMap } from '../components/map/LeafletMap'
+import { ForecastRow } from '../components/metrics/ForecastRow'
 import { MetricCarousel } from '../components/metrics/MetricCarousel'
 import { useBeaches } from '../hooks/useBeaches'
+import { useBeachForecast } from '../hooks/useBeachForecast'
 import { useBeachStatus } from '../hooks/useBeachStatus'
 import { useStationPings } from '../hooks/useStationPings'
 import { useWaveTrend } from '../hooks/useWaveTrend'
@@ -23,10 +25,12 @@ export function Dashboard() {
   const beaches = beachesResult?.data ?? []
   const activeSlug = beaches.find((b) => b.slug === selectedSlug)?.slug ?? beaches[0]?.slug ?? selectedSlug
   const { data: statusResult, isLoading: statusLoading } = useBeachStatus(activeSlug)
+  const { data: forecastResult } = useBeachForecast(activeSlug)
   const { data: pingsResult } = useStationPings()
   const { data: trendResult } = useWaveTrend('41113', 24)
 
   const status = statusResult?.data
+  const forecasts = forecastResult?.data ?? []
   const pings = pingsResult?.data ?? []
   const trend = trendResult?.data ?? []
 
@@ -34,6 +38,7 @@ export function Dashboard() {
     !isSupabaseConfigured && 'all sections',
     beachesResult?.source === 'mock' && 'beach list',
     statusResult?.source === 'mock' && 'beach conditions',
+    forecastResult?.source === 'mock' && 'forecast',
     pingsResult?.source === 'mock' && 'buoy pings',
     trendResult?.source === 'mock' && 'wave trend',
   ].filter(Boolean) as string[]
@@ -89,6 +94,7 @@ export function Dashboard() {
 
         <div className="relative z-20 -mt-6 px-margin-mobile md:px-margin-desktop md:mt-0 md:max-w-[1600px] md:mx-auto md:w-full">
           <MetricCarousel status={status} />
+          <ForecastRow forecasts={forecasts} isDemo={forecastResult?.source === 'mock'} />
         </div>
 
         <div className="px-margin-mobile md:px-margin-desktop md:max-w-[1600px] md:mx-auto md:w-full md:space-y-lg mt-lg">

@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import L from 'leaflet'
+import { useMinuteTick } from '../../hooks/useMinuteTick'
 import type { BeachStatus, StationMarker } from '../../lib/types'
+import { formatRelative } from '../../lib/units'
 import 'leaflet/dist/leaflet.css'
 
 const beachIcon = L.divIcon({
@@ -51,7 +53,9 @@ interface LeafletMapProps {
 }
 
 export function LeafletMap({ status, stations, isDemo = false, className = '' }: LeafletMapProps) {
+  useMinuteTick()
   const center: [number, number] = [status.lat, status.lng]
+  const updatedLabel = formatRelative(status.observed_at)
 
   return (
     <div className={`relative h-full w-full ${className}`}>
@@ -88,6 +92,9 @@ export function LeafletMap({ status, stations, isDemo = false, className = '' }:
             <p className="text-base font-semibold text-secondary-container">
               {isDemo && <span className="text-xs font-bold text-on-surface-variant mr-1">DEMO ·</span>}
               {status.status_label ?? status.rating ?? 'ACTIVE'}
+            </p>
+            <p className="text-xs font-medium tracking-wide text-on-surface-variant mt-xs">
+              Updated {updatedLabel}
             </p>
           </div>
         </div>

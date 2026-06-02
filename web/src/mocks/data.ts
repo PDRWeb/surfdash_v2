@@ -97,16 +97,22 @@ export const mockWaveTrend: WaveTrendPoint[] = Array.from({ length: 24 }, (_, i)
   wave_period_sec: 7 + (i % 4),
 }))
 
-export const mockForecast: BeachForecast[] = [1, 2, 3, 4].map((h) => ({
-  slug: 'cocoa-beach',
-  beach_name: 'Cocoa Beach',
-  forecast_hour: new Date(Date.now() + h * 3600000).toISOString(),
-  wave_height_ft: 4.2 + h * 0.2,
-  swell_period_sec: 8,
-  wind_speed_kts: 12,
-  rating: 'GOOD',
-  status_label: 'ACTIVE',
-}))
+export function getMockForecastForSlug(slug: string): BeachForecast[] {
+  const beach = mockBeaches.find((b) => b.slug === slug) ?? mockBeaches[0]
+  return [1, 2, 3, 4].map((h) => ({
+    slug: beach.slug,
+    beach_name: beach.name,
+    forecast_hour: new Date(Date.now() + h * 3600000).toISOString(),
+    wave_height_ft: 4.2 + h * 0.2,
+    swell_period_sec: 8,
+    wind_speed_kts: 12,
+    rating: 'GOOD',
+    status_label: 'ACTIVE',
+  }))
+}
+
+/** @deprecated Use getMockForecastForSlug */
+export const mockForecast = getMockForecastForSlug('cocoa-beach')
 
 export const mockStations = [
   { station_id: '41009', name: 'Canaveral 20 NM East', lat: 28.508, lng: -80.185, station_type: 'offshore_buoy' },

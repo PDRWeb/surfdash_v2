@@ -78,6 +78,10 @@ def triangulate(
     if water_temp_f is None and met:
         water_temp_f = _f(met.water_temp_c)
 
+    air_temp_f = _f(met.air_temp_c if met else None)
+    if air_temp_f is None and offshore:
+        air_temp_f = _f(offshore.air_temp_c)
+
     return TriangulatedStatus(
         observed_at=observed_at,
         wave_height_ft=nearshore_wave_ft,
@@ -85,7 +89,7 @@ def triangulate(
         swell_direction_deg=swell_dir,
         wind_speed_kts=_kts(met.wind_speed_ms if met else None),
         wind_direction_deg=met.wind_direction_deg if met else None,
-        air_temp_f=_f(met.air_temp_c if met else None),
+        air_temp_f=air_temp_f,
         water_temp_f=water_temp_f,
         nearshore_wave_ft=nearshore_wave_ft,
         offshore_swell_ft=offshore_swell_ft,
