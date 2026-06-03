@@ -1,3 +1,5 @@
+import { ThemeToggle } from './ThemeToggle'
+
 interface HeaderProps {
   beachName?: string
 }
@@ -7,8 +9,7 @@ export function Header({ beachName }: HeaderProps) {
     <header className="sticky top-0 w-full z-40 bg-surface/60 backdrop-blur-xl border-b border-outline-variant/10">
       <div className="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop">
         <div className="flex items-center gap-sm">
-          <span className="text-base font-extrabold text-on-surface">SurfDash</span>
-          <span className="hidden md:inline text-on-surface-variant">|</span>
+          <span className="text-base font-bold text-secondary-container md:hidden">surfdash</span>
           <span className="hidden md:inline text-secondary font-semibold text-sm tracking-wide">
             Melbourne, FL
           </span>
@@ -20,6 +21,7 @@ export function Header({ beachName }: HeaderProps) {
               {beachName}
             </div>
           )}
+          <ThemeToggle />
         </div>
       </div>
     </header>

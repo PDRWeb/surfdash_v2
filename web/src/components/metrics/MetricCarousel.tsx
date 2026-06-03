@@ -27,22 +27,26 @@ function MetricCard({
   filledIcon = false,
 }: MetricCardProps) {
   return (
-    <div className="min-w-[240px] snap-center glass-card p-md rounded-xl md:min-w-0">
-      <div className="flex items-center gap-sm mb-sm">
+    <div className="glass-card p-sm rounded-lg md:p-md md:rounded-xl">
+      <div className="flex items-center gap-xs md:gap-sm mb-xs md:mb-sm">
         <span
-          className={`material-symbols-outlined ${accent}`}
+          className={`material-symbols-outlined text-lg md:text-2xl shrink-0 ${accent}`}
           style={filledIcon ? { fontVariationSettings: '"FILL" 1' } : undefined}
         >
           {icon}
         </span>
-        <span className="text-sm font-semibold tracking-wide text-on-surface-variant uppercase">{label}</span>
+        <span className="text-xs md:text-sm font-semibold tracking-wide text-on-surface-variant uppercase leading-snug">
+          {label}
+        </span>
       </div>
       <div className="flex items-baseline gap-xs">
-        <span className="text-2xl font-bold text-on-surface">{value}</span>
-        <span className="text-sm text-on-surface-variant">{unit}</span>
+        <span className="text-lg md:text-2xl font-bold text-on-surface">{value}</span>
+        <span className="text-xs md:text-sm text-on-surface-variant">{unit}</span>
       </div>
-      <div className={`mt-sm flex items-center gap-xs text-xs font-medium tracking-wide uppercase ${subtitleClass}`}>
-        <span>{subtitle}</span>
+      <div
+        className={`mt-xs md:mt-sm text-[10px] md:text-xs font-medium tracking-wide uppercase ${subtitleClass}`}
+      >
+        {subtitle}
       </div>
     </div>
   )
@@ -56,45 +60,45 @@ export function MetricCarousel({ status }: MetricCarouselProps) {
 
   return (
     <section className="md:px-0">
-      <div className="flex overflow-x-auto gap-md no-scrollbar pb-md snap-x md:grid md:grid-cols-4 md:overflow-visible md:snap-none">
-          <MetricCard
-            icon="tsunami"
-            label="Wave Height"
-            value={formatValue(status.wave_height_ft, '', 1)}
-            unit="ft"
-            subtitle={waveSubtitle}
-            subtitleClass="text-secondary-container"
-            accent="text-secondary-container"
-            filledIcon
-          />
-          <MetricCard
-            icon="air"
-            label="Wind Speed"
-            value={formatValue(status.wind_speed_kts, '', 1)}
-            unit="kts"
-            subtitle={windLabel(status.wind_direction_deg, status.swell_direction_deg)}
-            subtitleClass="text-on-tertiary-container"
-            accent="text-primary"
-          />
-          <MetricCard
-            icon="timer"
-            label="Swell Period"
-            value={formatValue(status.swell_period_sec, '', 1)}
-            unit="sec"
-            subtitle={`NEARSHORE ${formatValue(status.nearshore_wave_ft, ' ft', 1)}`}
-            subtitleClass="text-primary"
-            accent="text-primary"
-          />
-          <MetricCard
-            icon="device_thermostat"
-            label="Water Temp"
-            value={formatValue(status.water_temp_f, '', 1)}
-            unit="°F"
-            subtitle={`AIR ${formatValue(status.air_temp_f, '°F', 1)}`}
-            subtitleClass="text-outline"
-            accent="text-primary-fixed"
-          />
-        </div>
-      </section>
+      <div className="flex flex-col gap-sm md:grid md:grid-cols-2 xl:grid-cols-4 md:gap-md">
+        <MetricCard
+          icon="tsunami"
+          label="Wave Height"
+          value={formatValue(status.wave_height_ft, '', 1)}
+          unit="ft"
+          subtitle={waveSubtitle}
+          subtitleClass="text-secondary-container"
+          accent="text-secondary-container"
+          filledIcon
+        />
+        <MetricCard
+          icon="air"
+          label="Wind Speed"
+          value={formatValue(status.wind_speed_kts, '', 1)}
+          unit="kts"
+          subtitle={windLabel(status.wind_direction_deg, status.swell_direction_deg)}
+          subtitleClass="text-on-tertiary-container"
+          accent="text-primary"
+        />
+        <MetricCard
+          icon="timer"
+          label="Swell Period"
+          value={formatValue(status.swell_period_sec, '', 1)}
+          unit="sec"
+          subtitle={`NEARSHORE ${formatValue(status.nearshore_wave_ft, ' ft', 1)}`}
+          subtitleClass="text-primary"
+          accent="text-primary"
+        />
+        <MetricCard
+          icon="device_thermostat"
+          label="Water Temp"
+          value={formatValue(status.water_temp_f, '', 1)}
+          unit="°F"
+          subtitle={`AIR ${formatValue(status.air_temp_f, '°F', 1)}`}
+          subtitleClass="text-outline"
+          accent="text-primary-fixed"
+        />
+      </div>
+    </section>
   )
 }

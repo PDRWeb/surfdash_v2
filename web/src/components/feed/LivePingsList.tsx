@@ -37,11 +37,11 @@ export function LivePingsList({ pings }: LivePingsListProps) {
           {pings.length} ACTIVE
         </span>
       </div>
-      <div className="space-y-sm">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-sm md:gap-md">
         {pings.map((ping) => (
           <div
             key={ping.station_id}
-            className="bg-surface-container-low rounded-xl p-md border border-outline-variant/30"
+            className="bg-surface-container-low rounded-xl p-md border border-outline-variant/30 flex flex-col"
           >
             <div className="flex justify-between items-start mb-sm">
               <div className="flex flex-col">

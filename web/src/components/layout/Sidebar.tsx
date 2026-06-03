@@ -1,3 +1,5 @@
+import { SidebarFooter } from './SidebarFooter'
+
 interface SidebarProps {
   selectedSlug: string
   onSelectBeach: (slug: string) => void
@@ -7,11 +9,11 @@ interface SidebarProps {
 export function Sidebar({ selectedSlug, onSelectBeach, beaches }: SidebarProps) {
   return (
     <aside className="hidden md:flex fixed left-0 top-0 h-full w-64 border-r border-outline-variant flex-col py-lg px-md z-50 bg-surface">
-      <div className="mb-xl px-md">
+      <div className="mb-xl px-md shrink-0">
         <h1 className="text-xl font-bold text-secondary-container">surfdash</h1>
         <p className="text-on-surface-variant text-sm font-semibold tracking-wide">Real-Time Wave Data</p>
       </div>
-      <nav className="flex-1 space-y-xs">
+      <nav className="flex-1 min-h-0 overflow-y-auto space-y-xs">
         <div className="flex items-center gap-md bg-secondary-container text-on-secondary-container rounded-lg px-md py-sm">
           <span className="material-symbols-outlined">dashboard</span>
           <span className="text-sm font-semibold tracking-wide">Dashboard</span>
@@ -31,6 +33,7 @@ export function Sidebar({ selectedSlug, onSelectBeach, beaches }: SidebarProps) 
           </button>
         ))}
       </nav>
+      <SidebarFooter />
     </aside>
   )
 }

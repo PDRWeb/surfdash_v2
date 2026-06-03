@@ -6,12 +6,12 @@ interface BeachPickerProps {
 
 export function BeachPicker({ beaches, selectedSlug, onSelect }: BeachPickerProps) {
   return (
-    <div className="flex overflow-x-auto gap-sm no-scrollbar pb-sm md:hidden">
+    <div className="grid grid-cols-2 gap-xs md:hidden">
       {beaches.map((beach) => (
         <button
           key={beach.slug}
           onClick={() => onSelect(beach.slug)}
-          className={`shrink-0 px-md py-sm rounded-full text-sm font-semibold tracking-wide transition-colors ${
+          className={`px-sm py-xs rounded-lg text-xs font-semibold tracking-wide text-center transition-colors ${
             selectedSlug === beach.slug
               ? 'bg-secondary-container text-on-secondary-container'
               : 'bg-surface-container-high text-on-surface-variant'

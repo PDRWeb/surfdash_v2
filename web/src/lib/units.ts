@@ -9,10 +9,9 @@ export function degToCompass(deg: number | null | undefined): string {
 export function formatTime(iso: string | null | undefined): string {
   if (!iso) return '—'
   return new Date(iso).toLocaleTimeString('en-US', {
-    hour: '2-digit',
+    hour: 'numeric',
     minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
+    hour12: true,
     timeZone: 'America/New_York',
   })
 }

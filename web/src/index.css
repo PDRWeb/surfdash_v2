@@ -1,6 +1,67 @@
 @import "tailwindcss";
 
 @theme {
+  --color-surface: #f8f9fc;
+  --color-on-primary-container: #274969;
+  --color-surface-bright: #ffffff;
+  --color-secondary-container: #fe6b00;
+  --color-primary-fixed: #001d34;
+  --color-on-primary: #ffffff;
+  --color-error: #ba1a1a;
+  --color-secondary-fixed-dim: #ffb693;
+  --color-on-secondary-fixed: #351000;
+  --color-on-secondary: #ffffff;
+  --color-on-primary-fixed: #cfe5ff;
+  --color-on-error-container: #410002;
+  --color-inverse-on-surface: #f1f3f6;
+  --color-primary-fixed-dim: #406182;
+  --color-surface-container: #edeef1;
+  --color-on-tertiary: #ffffff;
+  --color-on-background: #1a1c1e;
+  --color-outline-variant: #c3c7ce;
+  --color-background: #f8f9fc;
+  --color-on-tertiary-fixed: #001e2d;
+  --color-tertiary-fixed-dim: #009ad3;
+  --color-on-primary-fixed-variant: #7293b6;
+  --color-on-surface: #1a1c1e;
+  --color-secondary: #9a4300;
+  --color-tertiary-fixed: #001e2d;
+  --color-outline: #72787e;
+  --color-surface-dim: #d9dadd;
+  --color-on-tertiary-container: #004d6d;
+  --color-primary: #406182;
+  --color-inverse-primary: #a8caef;
+  --color-surface-tint: #406182;
+  --color-primary-container: #cfe5ff;
+  --color-inverse-surface: #2f3034;
+  --color-secondary-fixed: #ffdbcc;
+  --color-surface-container-highest: #e2e3e6;
+  --color-surface-container-low: #f3f4f7;
+  --color-tertiary-container: #c6e7ff;
+  --color-error-container: #ffdad6;
+  --color-on-surface-variant: #42474e;
+  --color-tertiary: #009ad3;
+  --color-surface-variant: #dfe2e8;
+  --color-surface-container-high: #e7e8eb;
+  --color-on-secondary-container: #572000;
+  --color-on-error: #ffffff;
+  --color-surface-container-lowest: #ffffff;
+
+  --spacing-md: 16px;
+  --spacing-gutter: 16px;
+  --spacing-margin-mobile: 16px;
+  --spacing-unit: 4px;
+  --spacing-sm: 8px;
+  --spacing-xs: 4px;
+  --spacing-container-max: 1440px;
+  --spacing-margin-desktop: 32px;
+  --spacing-xl: 32px;
+  --spacing-lg: 24px;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html.dark {
   --color-surface: #111316;
   --color-on-primary-container: #7293b6;
   --color-surface-bright: #37393d;
@@ -46,19 +107,6 @@
   --color-on-secondary-container: #572000;
   --color-on-error: #690005;
   --color-surface-container-lowest: #0c0e11;
-
-  --spacing-md: 16px;
-  --spacing-gutter: 16px;
-  --spacing-margin-mobile: 16px;
-  --spacing-unit: 4px;
-  --spacing-sm: 8px;
-  --spacing-xs: 4px;
-  --spacing-container-max: 1440px;
-  --spacing-margin-desktop: 32px;
-  --spacing-xl: 32px;
-  --spacing-lg: 24px;
-
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -70,21 +118,45 @@
 
 @layer utilities {
   .glass-card {
-    background: rgba(17, 19, 22, 0.6);
+    background: rgba(255, 255, 255, 0.72);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  html.dark .glass-card {
+    background: rgba(17, 19, 22, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .glass-panel {
-    background: rgba(30, 32, 35, 0.6);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  html.dark .glass-panel {
+    background: rgba(30, 32, 35, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .map-gradient-overlay {
-    background: linear-gradient(to bottom, transparent 0%, rgba(17, 19, 22, 0.6) 60%, rgba(17, 19, 22, 0.95) 100%);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(248, 249, 252, 0.6) 60%,
+      rgba(248, 249, 252, 0.95) 100%
+    );
+  }
+
+  html.dark .map-gradient-overlay {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(17, 19, 22, 0.6) 60%,
+      rgba(17, 19, 22, 0.95) 100%
+    );
   }
 
   .ping-pulse {
@@ -108,7 +180,8 @@
 }
 
 @keyframes ping-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -119,9 +192,13 @@
 }
 
 .leaflet-container {
-  background: #0c0e11 !important;
+  background: #e8eaed !important;
   font-family: "Inter", sans-serif;
   z-index: 0;
+}
+
+html.dark .leaflet-container {
+  background: #0c0e11 !important;
 }
 
 .leaflet-pane,

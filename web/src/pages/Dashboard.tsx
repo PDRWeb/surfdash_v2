@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { BeachPicker } from '../components/layout/BeachPicker'
-import { BottomNav } from '../components/layout/BottomNav'
+import { BackToTop } from '../components/layout/BackToTop'
+import { SidebarFooter } from '../components/layout/SidebarFooter'
 import { DemoDataBanner } from '../components/layout/DemoDataBanner'
 import { Header } from '../components/layout/Header'
 import { Sidebar } from '../components/layout/Sidebar'
@@ -68,12 +69,12 @@ export function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen pb-24 md:pb-0 md:ml-64">
+    <div className="min-h-screen pb-24 md:pb-20 md:ml-64">
       <Sidebar selectedSlug={activeSlug} onSelectBeach={setSelectedSlug} beaches={beachList} />
       <Header beachName={status.name} />
 
       <main className="flex flex-col">
-        <div className="md:hidden px-margin-mobile pt-md pb-sm">
+        <div className="md:hidden px-margin-mobile pt-sm pb-xs">
           <BeachPicker beaches={beachList} selectedSlug={activeSlug} onSelect={setSelectedSlug} />
         </div>
 
@@ -92,12 +93,12 @@ export function Dashboard() {
           />
         </section>
 
-        <div className="relative z-20 -mt-6 px-margin-mobile md:px-margin-desktop md:mt-0 md:max-w-[1600px] md:mx-auto md:w-full">
+        <div className="relative z-20 mt-md px-margin-mobile md:px-margin-desktop md:mt-lg md:max-w-[1600px] md:mx-auto md:w-full">
           <MetricCarousel status={status} />
           <ForecastRow forecasts={forecasts} isDemo={forecastResult?.source === 'mock'} />
         </div>
 
-        <div className="px-margin-mobile md:px-margin-desktop md:max-w-[1600px] md:mx-auto md:w-full md:space-y-lg mt-lg">
+        <div className="px-margin-mobile md:px-margin-desktop md:max-w-[1600px] md:mx-auto md:w-full md:space-y-lg mt-lg pb-md md:pb-lg">
           <LivePingsList pings={pings} />
           <WaveTrendChart
             points={trend}
@@ -105,9 +106,11 @@ export function Dashboard() {
             swellDirectionDeg={status.swell_direction_deg}
           />
         </div>
+
+        <SidebarFooter variant="mobile" />
       </main>
 
-      <BottomNav />
+      <BackToTop />
     </div>
   )
 }
