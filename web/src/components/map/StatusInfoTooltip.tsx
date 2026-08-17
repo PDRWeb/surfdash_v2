@@ -3,9 +3,10 @@ import { statusDescription } from '../../lib/statusLabels'
 
 interface StatusInfoTooltipProps {
   label: string
+  placement?: 'top' | 'bottom'
 }
 
-export function StatusInfoTooltip({ label }: StatusInfoTooltipProps) {
+export function StatusInfoTooltip({ label, placement = 'bottom' }: StatusInfoTooltipProps) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLSpanElement>(null)
 
@@ -33,9 +34,9 @@ export function StatusInfoTooltip({ label }: StatusInfoTooltipProps) {
       </button>
       <span
         role="tooltip"
-        className={`absolute left-0 top-full z-[600] mt-1 w-56 rounded-lg border border-outline-variant/40 bg-surface-container-high px-sm py-xs text-xs leading-relaxed text-on-surface-variant shadow-lg ${
-          open ? 'block' : 'hidden md:group-hover:block'
-        }`}
+        className={`absolute left-0 z-[600] w-56 rounded-lg border border-outline-variant/40 bg-surface-container-high px-sm py-xs text-xs leading-relaxed text-on-surface-variant shadow-lg ${
+          placement === 'top' ? 'bottom-full mb-1' : 'top-full mt-1'
+        } ${open ? 'block' : 'hidden md:group-hover:block'}`}
       >
         {statusDescription(label)}
       </span>

@@ -40,6 +40,13 @@ export function formatValue(value: number | null | undefined, suffix = '', digit
   return `${value.toFixed(digits)}${suffix}`
 }
 
+const KTS_TO_MPH = 1.15078
+
+export function ktsToMph(kts: number | null | undefined): number | null {
+  if (kts == null) return null
+  return kts * KTS_TO_MPH
+}
+
 export function windLabel(windDir: number | null, swellDir: number | null): string {
   if (windDir == null) return '—'
   const compass = degToCompass(windDir)

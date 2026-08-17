@@ -1,5 +1,5 @@
 import type { BeachStatus } from '../../lib/types'
-import { formatValue, windLabel } from '../../lib/units'
+import { formatValue, ktsToMph, windLabel } from '../../lib/units'
 
 interface MetricCarouselProps {
   status: BeachStatus
@@ -10,7 +10,7 @@ interface MetricCardProps {
   label: string
   value: string
   unit: string
-  subtitle: string
+  subtitle?: string
   subtitleClass?: string
   accent?: string
   filledIcon?: boolean
@@ -43,11 +43,13 @@ function MetricCard({
         <span className="text-lg md:text-2xl font-bold text-on-surface">{value}</span>
         <span className="text-xs md:text-sm text-on-surface-variant">{unit}</span>
       </div>
-      <div
-        className={`mt-xs md:mt-sm text-[10px] md:text-xs font-medium tracking-wide uppercase ${subtitleClass}`}
-      >
-        {subtitle}
-      </div>
+      {subtitle && (
+        <div
+          className={`mt-xs md:mt-sm text-[10px] md:text-xs font-medium tracking-wide uppercase ${subtitleClass}`}
+        >
+          {subtitle}
+        </div>
+      )}
     </div>
   )
 }
@@ -60,7 +62,7 @@ export function MetricCarousel({ status }: MetricCarouselProps) {
 
   return (
     <section className="md:px-0">
-      <div className="flex flex-col gap-sm md:grid md:grid-cols-2 xl:grid-cols-4 md:gap-md">
+      <div className="flex flex-col gap-sm md:grid md:grid-cols-2 xl:grid-cols-5 md:gap-md">
         <MetricCard
           icon="tsunami"
           label="Wave Height"
@@ -74,8 +76,8 @@ export function MetricCarousel({ status }: MetricCarouselProps) {
         <MetricCard
           icon="air"
           label="Wind Speed"
-          value={formatValue(status.wind_speed_kts, '', 1)}
-          unit="kts"
+          value={formatValue(ktsToMph(status.wind_speed_kts), '', 1)}
+          unit="mph"
           subtitle={windLabel(status.wind_direction_deg, status.swell_direction_deg)}
           subtitleClass="text-on-tertiary-container"
           accent="text-primary"
@@ -94,9 +96,14 @@ export function MetricCarousel({ status }: MetricCarouselProps) {
           label="Water Temp"
           value={formatValue(status.water_temp_f, '', 1)}
           unit="°F"
-          subtitle={`AIR ${formatValue(status.air_temp_f, '°F', 1)}`}
-          subtitleClass="text-outline"
           accent="text-primary-fixed"
+        />
+        <MetricCard
+          icon="thermostat"
+          label="Air Temp"
+          value={formatValue(status.air_temp_f, '', 1)}
+          unit="°F"
+          accent="text-outline"
         />
       </div>
     </section>

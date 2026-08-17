@@ -1,5 +1,5 @@
 import type { BeachForecast } from '../../lib/types'
-import { formatForecastHour, formatValue } from '../../lib/units'
+import { formatForecastHour, formatValue, ktsToMph } from '../../lib/units'
 
 interface ForecastRowProps {
   forecasts: BeachForecast[]
@@ -26,7 +26,7 @@ interface ForecastCardProps {
 
 function ForecastCard({ row }: ForecastCardProps) {
   const label = row.status_label ?? row.rating ?? '—'
-  const meta = `${formatValue(row.swell_period_sec, '', 0)}s · ${formatValue(row.wind_speed_kts, '', 0)} kts`
+  const meta = `${formatValue(row.swell_period_sec, '', 0)}s · ${formatValue(ktsToMph(row.wind_speed_kts), '', 0)} mph`
 
   return (
     <div className="glass-card p-sm rounded-lg md:p-md md:rounded-xl md:flex md:flex-col md:gap-sm">

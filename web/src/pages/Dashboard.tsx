@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { BeachPicker } from '../components/layout/BeachPicker'
 import { BackToTop } from '../components/layout/BackToTop'
 import { SidebarFooter } from '../components/layout/SidebarFooter'
@@ -15,9 +15,8 @@ import { useBeachForecast } from '../hooks/useBeachForecast'
 import { useBeachStatus } from '../hooks/useBeachStatus'
 import { useStationPings } from '../hooks/useStationPings'
 import { useWaveTrend } from '../hooks/useWaveTrend'
-import type { StationMarker } from '../lib/types'
 import { isSupabaseConfigured } from '../lib/supabase'
-import { mockStations } from '../mocks/data'
+import { mockStationPings } from '../mocks/data'
 
 export function Dashboard() {
   const { data: beachesResult } = useBeaches()
@@ -44,19 +43,7 @@ export function Dashboard() {
     trendResult?.source === 'mock' && 'wave trend',
   ].filter(Boolean) as string[]
 
-  const stationMarkers: StationMarker[] = useMemo(
-    () =>
-      pings.length > 0
-        ? pings.map((p) => ({
-            station_id: p.station_id,
-            name: p.station_name,
-            lat: p.lat,
-            lng: p.lng,
-            station_type: p.station_type,
-          }))
-        : mockStations,
-    [pings],
-  )
+  const stationPings = pings.length > 0 ? pings : mockStationPings
 
   const beachList = beaches.map((b) => ({ slug: b.slug, name: b.name }))
 
@@ -79,15 +66,15 @@ export function Dashboard() {
         </div>
 
         {demoSections.length > 0 && (
-          <div className="px-margin-mobile md:px-margin-desktop md:max-w-[1600px] md:mx-auto md:w-full mt-md">
+          <div className="relative z-10 px-margin-mobile md:px-margin-desktop md:max-w-[1600px] md:mx-auto md:w-full mt-md">
             <DemoDataBanner sections={demoSections} />
           </div>
         )}
 
-        <section className="relative h-[353px] w-full overflow-hidden md:h-[420px] md:rounded-xl md:mx-margin-desktop md:mt-lg md:w-[calc(100%-64px)]">
+        <section className="relative z-0 h-[353px] w-full overflow-hidden md:h-[420px] md:rounded-xl md:mx-margin-desktop md:mt-lg md:w-[calc(100%-64px)]">
           <LeafletMap
             status={status}
-            stations={stationMarkers}
+            stations={stationPings}
             isDemo={statusResult?.source === 'mock'}
             className="absolute inset-0"
           />
